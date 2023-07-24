@@ -1,0 +1,13 @@
+version: "3"
+services:
+  fileserver:
+    build: 
+      context: ./App
+      dockerfile: Dockerfile
+    ports:
+      - "8765:8765"
+    volumes:
+      - ./App:/App
+      - .env:/.env
+      - ./App/image:/App/image
+    restart: always
