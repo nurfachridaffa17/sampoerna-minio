@@ -86,14 +86,13 @@ wb_obj = openpyxl.load_workbook(path)
 sheet_obj = wb_obj.active
 m_row = sheet_obj.max_row 
 m_column = sheet_obj.max_column
+local_file_path = "/opt/sampoerna-minio/static"
 
 for i in range(1, m_row + 1):
     path_url = sheet_obj.cell(row = i, column = 1).value
     try:
         bucket_name_minio = os.environ['BUCKET_NAME_MINIO']
         object_name_minio = path_url
-        local_file_path = "/opt/sampoerna-minio/static"
-
         minio_file_path = os.path.join(local_file_path, os.path.basename(path_url))
 
         if not file_exists_in_local(minio_file_path):
