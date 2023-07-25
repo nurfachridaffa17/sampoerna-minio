@@ -3,7 +3,7 @@ import os
 import openpyxl
 from dotenv.main import load_dotenv
 import boto3
-from .log import Logger
+from log import Logger
 
 
 # Create a client with the MinIO server playground, its access key
