@@ -1,3 +1,6 @@
 static/*
 .env
 m_berkas_202307241439.csv
+__pycache__/
+Dockerfile
+docker-compose.yml

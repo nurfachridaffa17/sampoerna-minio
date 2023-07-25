@@ -51,12 +51,12 @@ def file_exists_in_local(file_path):
     return os.path.exists(file_path)
 
 
-# def upload_file_to_s3(bucket_name, file_path, object_name):
-#     try:
-#         s3_client.upload_file(file_path, bucket_name, object_name)
-#         log.info(f"File uploaded successfully to {bucket_name}/{object_name}")
-#     except Exception as e:
-#         log.error(f"Error uploading file: {str(e)}")
+def upload_file_to_s3(bucket_name, file_path, object_name):
+    try:
+        s3_client.upload_file(file_path, bucket_name, object_name)
+        log.info(f"File uploaded successfully to {bucket_name}/{object_name}")
+    except Exception as e:
+        log.error(f"Error uploading file: {str(e)}")
 
 def check_object_existence(bucket_name, object_name):
     try:
@@ -69,15 +69,15 @@ def check_object_existence(bucket_name, object_name):
         return False
 
 
-def upload_file_to_s3(bucket_name, file_path, object_name):
-    try:
-        if not check_object_existence(bucket_name, object_name):
-            s3_client.upload_file(file_path, bucket_name, object_name)
-            log.info(f"File uploaded successfully to {bucket_name}/{object_name}")
-        else:
-            log.info(f"File already exists in {bucket_name}/{object_name}")
-    except Exception as e:
-        log.error(f"Error uploading file: {str(e)}")
+# def upload_file_to_s3(bucket_name, file_path, object_name):
+#     try:
+#         if not check_object_existence(bucket_name, object_name):
+#             s3_client.upload_file(file_path, bucket_name, object_name)
+#             log.info(f"File uploaded successfully to {bucket_name}/{object_name}")
+#         else:
+#             log.info(f"File already exists in {bucket_name}/{object_name}")
+#     except Exception as e:
+#         log.error(f"Error uploading file: {str(e)}")
 
 
 
@@ -98,9 +98,9 @@ for i in range(1, m_row + 1):
 
         if not file_exists_in_local(minio_file_path):
             download_file(bucket_name_minio, object_name_minio, local_file_path)
-            log.info("Download file from MinIO success", path_url)
+            log.info("Download file from MinIO success {}".format(path_url))
         else:
-            log.info("File already exists in local static folder, skipping download", path_url)
+            log.info("File already exists in local static folder, skipping download {}".format(path_url))
     except Exception as e:
         log.error(f"Error downloading file: {str(e)}")
     
@@ -108,18 +108,17 @@ for i in range(1, m_row + 1):
         bucket_name_s3 = os.environ['S3_BUCKET']
         object_name_s3 = path_url
         file_path = "/opt/sampoerna-minio/static/{}".format(path_url.split("/")[-1])
-
         if not check_object_existence(bucket_name_s3, object_name_s3):
             upload_file_to_s3(bucket_name_s3, file_path, object_name_s3)
-            log.info("Upload file to S3 success", path_url)
+            log.info("Upload file to S3 success {}".format(path_url))
         else:
-            log.info("Object already exists in S3, skipping upload", path_url)
+            log.info("Object already exists in S3, skipping upload {}".format(path_url))
     except Exception as e:
         log.error(f"Error uploading file: {str(e)}")
     
     try:
         os.remove(file_path)
-        log.info("Delete file success", path_url)
+        log.info("Delete file success {}".format(path_url))
     except Exception as e:
         log.error(f"Error deleting file: {str(e)}")
 
