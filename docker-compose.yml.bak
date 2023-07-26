@@ -1,0 +1,9 @@
+version: "3"
+services:
+  migration:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./static:static
+    restart: always
