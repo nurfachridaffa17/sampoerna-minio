@@ -68,19 +68,6 @@ def check_object_existence(bucket_name, object_name):
         print(f"Error checking object existence: {str(e)}")
         return False
 
-
-# def upload_file_to_s3(bucket_name, file_path, object_name):
-#     try:
-#         if not check_object_existence(bucket_name, object_name):
-#             s3_client.upload_file(file_path, bucket_name, object_name)
-#             log.info(f"File uploaded successfully to {bucket_name}/{object_name}")
-#         else:
-#             log.info(f"File already exists in {bucket_name}/{object_name}")
-#     except Exception as e:
-#         log.error(f"Error uploading file: {str(e)}")
-
-
-
 path = os.environ['PATH_FOLDER_EXCEL']
 wb_obj = openpyxl.load_workbook(path) 
 sheet_obj = wb_obj.active
