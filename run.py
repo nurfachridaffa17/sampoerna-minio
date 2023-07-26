@@ -68,32 +68,18 @@ def check_object_existence(bucket_name, object_name):
         print(f"Error checking object existence: {str(e)}")
         return False
 
-
-# def upload_file_to_s3(bucket_name, file_path, object_name):
-#     try:
-#         if not check_object_existence(bucket_name, object_name):
-#             s3_client.upload_file(file_path, bucket_name, object_name)
-#             log.info(f"File uploaded successfully to {bucket_name}/{object_name}")
-#         else:
-#             log.info(f"File already exists in {bucket_name}/{object_name}")
-#     except Exception as e:
-#         log.error(f"Error uploading file: {str(e)}")
-
-
-
 path = os.environ['PATH_FOLDER_EXCEL']
 wb_obj = openpyxl.load_workbook(path) 
 sheet_obj = wb_obj.active
 m_row = sheet_obj.max_row 
 m_column = sheet_obj.max_column
+local_file_path = "/opt/sampoerna-minio/static"
 
 for i in range(1, m_row + 1):
     path_url = sheet_obj.cell(row = i, column = 1).value
     try:
         bucket_name_minio = os.environ['BUCKET_NAME_MINIO']
         object_name_minio = path_url
-        local_file_path = "/opt/sampoerna-minio/static"
-
         minio_file_path = os.path.join(local_file_path, os.path.basename(path_url))
 
         if not file_exists_in_local(minio_file_path):
